@@ -47,12 +47,10 @@ app.get('/numbers/add/:x/and/:y', (req, res) => {
   const x = parseInt(req.params.x);
   const y = parseInt(req.params.y);
 
-  if (x === 0 || y === 0) {
+  if (x >= 0 || y >= 0) {
     res.status(200).json({ result: add(x, y) });
   } else if (!x || !y) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' })
-  } else {
-    res.status(200).json({ result: add(x, y)})
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
   }
 
 });
@@ -61,12 +59,10 @@ app.get('/numbers/subtract/:x/from/:y', (req, res) => {
   const x = parseInt(req.params.x);
   const y = parseInt(req.params.y);
 
-  if (x === 0 || y === 0) {
+  if (x >= 0 || y >= 0) {
     res.status(200).json({ result: subtract(y, x) });
   } else if (!x || !y) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' })
-  } else {
-    res.status(200).json({ result: subtract(y, x)})
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
   }
 
 });
