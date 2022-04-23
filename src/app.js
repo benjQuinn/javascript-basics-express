@@ -1,5 +1,5 @@
 const express = require('express');
-const { add } = require('./lib/numbers');
+const { add, subtract, multiply } = require('./lib/numbers');
 const { 
   sayHello,  
   uppercase, 
@@ -8,6 +8,8 @@ const {
   firstCharacters, } = require('./lib/strings')
 
 const app = express();
+
+app.use(express.json());
 
 ///////////STRINGS///////////
 app.get('/strings/hello/:string', (req, res) => {
@@ -52,8 +54,28 @@ app.get('/numbers/add/:x/and/:y', (req, res) => {
   } else {
     res.status(200).json({ result: add(x, y)})
   }
-  
+
 });
 
+app.get('/numbers/subtract/:x/from/:y', (req, res) => {
+  const x = parseInt(req.params.x);
+  const y = parseInt(req.params.y);
+
+  if (x === 0 || y === 0) {
+    res.status(200).json({ result: subtract(y, x) });
+  } else if (!x || !y) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' })
+  } else {
+    res.status(200).json({ result: subtract(y, x)})
+  }
+
+});
+
+app.post('/numbers/multiply', (req, res) => {
+  const a = req.body.a;
+  const b = req.body.b
+
+  res.status(200).json({ result: multiply(a, b) });
+});
 
 module.exports = app;
